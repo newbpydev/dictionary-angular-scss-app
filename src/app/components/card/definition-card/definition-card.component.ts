@@ -2,12 +2,16 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-main-nav',
+  selector: 'app-definition-card',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './main-nav.component.html',
-  styleUrl: './main-nav.component.scss'
+  template: `
+    <p>
+      definition-card works!
+    </p>
+  `,
+  styles: ``
 })
-export class MainNavComponent {
+export class DefinitionCardComponent {
 
 }
