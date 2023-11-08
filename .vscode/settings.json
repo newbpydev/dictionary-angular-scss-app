@@ -27,5 +27,6 @@
     "activityBar.background": "#2A3009",
     "titleBar.activeBackground": "#3B440D",
     "titleBar.activeForeground": "#F9FCED"
-  }
+  },
+  "cSpell.words": ["wght"]
 }
