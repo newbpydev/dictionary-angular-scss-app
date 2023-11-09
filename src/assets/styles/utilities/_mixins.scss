@@ -1,0 +1,19 @@
+@mixin media-query($breakpoint) {
+  @if $breakpoint ==tablet {
+    @media screen and (min-width: 48em) {
+      @content;
+    }
+  }
+
+  @else if $breakpoint ==desktop {
+    @media screen and (min-width: 90em) {
+      @content;
+    }
+  }
+
+  @else {
+    @media screen and (min-width: $breakpoint) {
+      @content;
+    }
+  }
+}

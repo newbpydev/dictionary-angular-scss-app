@@ -1,8 +1,6 @@
 {
   "workbench.colorCustomizations": {
-    "statusBar.background": "#1A1A1A",
     "statusBar.noFolderBackground": "#212121",
-    "statusBar.debuggingBackground": "#263238",
     "terminal.background": "#0C0D0E",
     "terminal.foreground": "#bfc4c9",
     "terminalCursor.background": "#B7B8B9",
@@ -23,10 +21,7 @@
     "terminal.ansiRed": "#E31A1C",
     "terminal.ansiWhite": "#B7B8B9",
     "terminal.ansiYellow": "#DCA060",
-    "terminal.integrated.fontFamily": "MesloGM Nerd Font",
-    "activityBar.background": "#2A3009",
-    "titleBar.activeBackground": "#3B440D",
-    "titleBar.activeForeground": "#F9FCED"
+    "terminal.integrated.fontFamily": "MesloGM Nerd Font"
   },
   "cSpell.words": ["wght"]
 }

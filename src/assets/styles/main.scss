@@ -1,4 +1,6 @@
-@use 'base/reset';
-@use 'base/typography';
+@import 'base/base';
+@import 'base/reset';
+@import 'base/typography';
 
 @import 'utilities/variables';
+@import 'utilities/mixins';

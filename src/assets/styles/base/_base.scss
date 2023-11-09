@@ -1,0 +1,23 @@
+@import '../utilities/mixins';
+@import '../utilities/variables';
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  color: $color-gray;
+  font-family: $font-inter;
+  font-size: $fs-body-m;
+  line-height: normal;
+  font-weight: 400;
+
+}
+
+.main {
+
+  & .dark {
+    color: $color-white;
+    background-color: $color-black;
+  }
+}
