@@ -37,7 +37,7 @@ import { WordDisplayComponent } from './components/word-display/word-display.com
     </main>
   `,
   // styleUrl: './app.component.scss',
-  styles: /*scss*/ `
+  styles: `
     @import './utilities/_variables.scss';
 
     .main {
@@ -52,7 +52,7 @@ import { WordDisplayComponent } from './components/word-display/word-display.com
   `,
 })
 export class AppComponent implements OnInit {
-  isDark = true;
+  isDark = false;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
