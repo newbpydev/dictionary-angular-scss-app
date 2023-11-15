@@ -92,8 +92,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const isDark = this.storageService.getItem('isDark');
-      console.log('isDark?????', isDark);
-
       this.sharedService.setIsDark(isDark);
       this.subscription = this.sharedService.isDark$.subscribe(
         (state) => (this.isDark = state)
