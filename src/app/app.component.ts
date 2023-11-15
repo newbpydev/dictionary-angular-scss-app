@@ -1,20 +1,12 @@
 import { Subscription } from 'rxjs';
 
-import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
-  AfterViewChecked,
-  AfterViewInit,
   Component,
-  effect,
-  ElementRef,
   Inject,
-  OnChanges,
   OnDestroy,
   OnInit,
   PLATFORM_ID,
-  Renderer2,
-  signal,
-  SimpleChanges,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
@@ -38,7 +30,10 @@ import { StorageService } from './storage.service';
     DefinitionCardComponent,
     FooterComponent,
   ],
-  // templateUrl: './app.component.html',
+
+  /* -------------------------------------------------------------------------- */
+  /*                                  Template                                  */
+  /* -------------------------------------------------------------------------- */
   template: /*html*/ `
     <main class="main" [ngClass]="[isDark ? 'dark' : '', 'monkey']">
       <app-main-nav />
@@ -54,7 +49,10 @@ import { StorageService } from './storage.service';
       <router-outlet></router-outlet>
     </main>
   `,
-  // styleUrl: './app.component.scss',
+
+  /* -------------------------------------------------------------------------- */
+  /*                                   Styles                                   */
+  /* -------------------------------------------------------------------------- */
   styles: `
     @import './utilities/_variables.scss';
 
@@ -71,11 +69,14 @@ import { StorageService } from './storage.service';
     }
   `,
 })
-export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
+/* -------------------------------------------------------------------------- */
+/*                                App Component                               */
+/* -------------------------------------------------------------------------- */
+export class AppComponent implements OnInit, OnDestroy {
   isDark = false;
   private subscription: Subscription;
-  // private isBrowser: boolean;
 
+  /* ------------------------------- Constructor ------------------------------ */
   constructor(
     private sharedService: SharedService,
     private storageService: StorageService,
@@ -86,10 +87,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
+  /* --------------------------------- OnInit --------------------------------- */
   ngOnInit(): void {
-    // this.updateBodyClass();
-    console.log('on init');
-
     if (isPlatformBrowser(this.platformId)) {
       const isDark = this.storageService.getItem('isDark');
       console.log('isDark?????', isDark);
@@ -101,19 +100,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  /* -------------------------------- OnDestroy ------------------------------- */
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
-
-  ngAfterViewInit(): void {
-    console.log('in th view init');
-    // const test = this.storageService.getItem('isDark');
-    // console.log(test);
-    // if (test) {
-    //   console.log('it has something', test);
-    // } else {
-    //   console.log('I will need to add it');
-    //   this.storageService.setItem('isDark', false);
-    // }
   }
 }
