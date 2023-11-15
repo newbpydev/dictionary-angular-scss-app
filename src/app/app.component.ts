@@ -13,6 +13,7 @@ import { RouterOutlet } from '@angular/router';
 import { DefinitionCardComponent } from './components/card/definition-card/definition-card.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SearchbarComponent } from './components/forms/searchbar/searchbar.component';
+import { DefinitionCardListComponent } from './components/lists/definition-card-list/definition-card-list.component';
 import { MainNavComponent } from './components/navigation/main-nav/main-nav.component';
 import { WordDisplayComponent } from './components/word-display/word-display.component';
 import { SharedService } from './shared.service';
@@ -27,7 +28,7 @@ import { StorageService } from './storage.service';
     MainNavComponent,
     SearchbarComponent,
     WordDisplayComponent,
-    DefinitionCardComponent,
+    DefinitionCardListComponent,
     FooterComponent,
   ],
 
@@ -42,7 +43,7 @@ import { StorageService } from './storage.service';
 
       <app-word-display />
 
-      <app-definition-card />
+      <app-definition-card-list />
 
       <app-footer />
 
