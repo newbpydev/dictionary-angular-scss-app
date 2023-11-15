@@ -1,17 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter } from '@angular/core';
 
+import { LogoComponent } from '../../ui/icons/logo/logo.component';
 import { ThemeSwitchComponent } from '../../ui/theme-switch/theme-switch.component';
 
 @Component({
   selector: 'app-main-nav',
   standalone: true,
-  imports: [CommonModule, ThemeSwitchComponent],
+  imports: [CommonModule, ThemeSwitchComponent, LogoComponent],
   // inputs: ['isDark'],
   // outputs: ['isCheckedChange'],
   template: `
     <header class="container top-container">
-      <h1>Logo</h1>
+      <app-logo />
 
       <div class="theme-font-group">
         <select name="font" id="font">
@@ -28,6 +29,7 @@ import { ThemeSwitchComponent } from '../../ui/theme-switch/theme-switch.compone
     header {
       display:flex;
       justify-content: space-between;
+
     }
 
     .theme-font-group {
