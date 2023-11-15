@@ -1,17 +1,11 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-definition-card',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <p>
-      definition-card works!
-    </p>
-  `,
-  styles: ``
+  template: ` <article>definition-card works!</article> `,
+  styles: ``,
 })
-export class DefinitionCardComponent {
-
-}
+export class DefinitionCardComponent {}

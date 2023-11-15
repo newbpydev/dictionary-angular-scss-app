@@ -1,13 +1,17 @@
 import { Subscription } from 'rxjs';
 
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
+  AfterViewChecked,
+  AfterViewInit,
   Component,
   effect,
+  ElementRef,
   Inject,
   OnChanges,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
   Renderer2,
   signal,
   SimpleChanges,
@@ -20,6 +24,7 @@ import { SearchbarComponent } from './components/forms/searchbar/searchbar.compo
 import { MainNavComponent } from './components/navigation/main-nav/main-nav.component';
 import { WordDisplayComponent } from './components/word-display/word-display.component';
 import { SharedService } from './shared.service';
+import { StorageService } from './storage.service';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +40,7 @@ import { SharedService } from './shared.service';
   ],
   // templateUrl: './app.component.html',
   template: /*html*/ `
-    <main class="main container" [ngClass]="[isDark ? 'dark' : '', 'monkey']">
+    <main class="main" [ngClass]="[isDark ? 'dark' : '', 'monkey']">
       <app-main-nav />
 
       <app-searchbar />
@@ -56,14 +61,26 @@ import { SharedService } from './shared.service';
     .main {
       display: flex;
       flex-direction: column;
+      width: 100%;
+      height: 100%;
+
+      &.dark {
+        background-color: $color-black;
+        color: $color-white;
+      }
     }
   `,
 })
-export class AppComponent implements OnInit, OnDestroy {
-  isDark = true;
+export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
+  isDark = false;
   private subscription: Subscription;
+  // private isBrowser: boolean;
 
-  constructor(private sharedService: SharedService) {
+  constructor(
+    private sharedService: SharedService,
+    private storageService: StorageService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
     this.subscription = this.sharedService.isDark$.subscribe(
       (isDark) => (this.isDark = isDark)
     );
@@ -71,32 +88,32 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // this.updateBodyClass();
+    console.log('on init');
+
+    if (isPlatformBrowser(this.platformId)) {
+      const isDark = this.storageService.getItem('isDark');
+      console.log('isDark?????', isDark);
+
+      this.sharedService.setIsDark(isDark);
+      this.subscription = this.sharedService.isDark$.subscribe(
+        (state) => (this.isDark = state)
+      );
+    }
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('onChanges', changes);
-    // this.updateBodyClass();
+  ngAfterViewInit(): void {
+    console.log('in th view init');
+    // const test = this.storageService.getItem('isDark');
+    // console.log(test);
+    // if (test) {
+    //   console.log('it has something', test);
+    // } else {
+    //   console.log('I will need to add it');
+    //   this.storageService.setItem('isDark', false);
+    // }
   }
-
-  // logger = effect(() => {
-  //   localStorage.setItem('darkMode', JSON.stringify(this.isDark));
-  // });
-
-  handleThemeToggle(payload: boolean) {
-    this.isDark = !this.isDark;
-  }
-
-  // updateBodyClass() {
-  //   const bodyClass = 'dark';
-
-  //   if (this.isDark) {
-  //     this.renderer.addClass(this.document.body, bodyClass);
-  //   } else {
-  //     this.renderer.removeClass(this.document.body, bodyClass);
-  //   }
-  // }
 }

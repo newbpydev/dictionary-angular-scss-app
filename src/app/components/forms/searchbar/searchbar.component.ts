@@ -1,17 +1,11 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-searchbar',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <p>
-      searchbar works!
-    </p>
-  `,
-  styles: ``
+  template: ` <section class="container">searchbar</section> `,
+  styles: ``,
 })
-export class SearchbarComponent {
-
-}
+export class SearchbarComponent {}

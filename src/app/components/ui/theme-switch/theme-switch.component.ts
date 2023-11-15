@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 
 import { SharedService } from '../../../shared.service';
+import { StorageService } from '../../../storage.service';
 
 @Component({
   selector: 'app-theme-switch',
@@ -11,7 +12,11 @@ import { SharedService } from '../../../shared.service';
   // outputs: ['isCheckedChange'],
   template: `
     <label class="switch">
-      <input type="checkbox" (change)="onCheckChange($event)" />
+      <input
+        type="checkbox"
+        (change)="onCheckChange($event)"
+        [checked]="isChecked"
+      />
       <span class="slider round"></span>
     </label>
   `,
@@ -82,15 +87,23 @@ import { SharedService } from '../../../shared.service';
     }
   `,
 })
-export class ThemeSwitchComponent {
-  // isChecked: boolean | null = null;
+export class ThemeSwitchComponent implements OnInit {
+  isChecked: boolean | null = null;
   // isCheckedChange = new EventEmitter<boolean>();
 
-  constructor(private sharedService: SharedService) {}
+  constructor(
+    private sharedService: SharedService,
+    private storageService: StorageService
+  ) {}
+
+  ngOnInit(): void {
+    const isItDark = this.storageService.getItem('isDark');
+    this.isChecked = isItDark;
+  }
 
   onCheckChange(event: Event): void {
-    // this.isChecked = (event.target as HTMLInputElement).checked;
-    // this.isCheckedChange.emit(this.isChecked);
-    this.sharedService.setIsDark((event.target as HTMLInputElement).checked);
+    const value = (event.target as HTMLInputElement).checked;
+    this.storageService.setItem('isDark', value);
+    this.sharedService.setIsDark(value);
   }
 }

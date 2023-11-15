@@ -1,25 +1,46 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StorageService {
-  constructor() {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
+  isLocalStorageAvailable(): boolean {
+    return isPlatformBrowser(this.platformId) && !!window.localStorage;
+  }
+
+  // isLocalStorageAvailable(): boolean {
+  //   try {
+  //     return typeof window !== 'undefined' && !!window.localStorage;
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // }
 
   setItem(key: string, value: any): void {
-    localStorage.setItem(key, JSON.stringify(value));
+    if (this.isLocalStorageAvailable()) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
   }
 
   getItem(key: string): any {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : null;
+    if (this.isLocalStorageAvailable()) {
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : null;
+    }
   }
 
   removeItem(key: string): void {
-    localStorage.removeItem(key);
+    if (this.isLocalStorageAvailable()) {
+      localStorage.removeItem(key);
+    }
   }
 
   clear(): void {
-    localStorage.clear();
+    if (this.isLocalStorageAvailable()) {
+      localStorage.clear();
+    }
   }
 }

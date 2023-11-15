@@ -1,17 +1,11 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-word-display',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <p>
-      word-display works!
-    </p>
-  `,
-  styles: ``
+  template: ` <section class="container">word-display works!</section> `,
+  styles: ``,
 })
-export class WordDisplayComponent {
-
-}
+export class WordDisplayComponent {}

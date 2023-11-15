@@ -10,7 +10,7 @@ import { ThemeSwitchComponent } from '../../ui/theme-switch/theme-switch.compone
   // inputs: ['isDark'],
   // outputs: ['isCheckedChange'],
   template: `
-    <header>
+    <header class="container top-container">
       <h1>Logo</h1>
 
       <div class="theme-font-group">
