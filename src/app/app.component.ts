@@ -1,5 +1,17 @@
+import { Subscription } from 'rxjs';
+
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import {
+  Component,
+  effect,
+  Inject,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  signal,
+  SimpleChanges,
+} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { DefinitionCardComponent } from './components/card/definition-card/definition-card.component';
@@ -7,6 +19,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SearchbarComponent } from './components/forms/searchbar/searchbar.component';
 import { MainNavComponent } from './components/navigation/main-nav/main-nav.component';
 import { WordDisplayComponent } from './components/word-display/word-display.component';
+import { SharedService } from './shared.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +35,7 @@ import { WordDisplayComponent } from './components/word-display/word-display.com
   ],
   // templateUrl: './app.component.html',
   template: /*html*/ `
-    <main class="main container" [ngClass]="isDark ? 'dark' : ''">
+    <main class="main container" [ngClass]="[isDark ? 'dark' : '', 'monkey']">
       <app-main-nav />
 
       <app-searchbar />
@@ -43,36 +56,47 @@ import { WordDisplayComponent } from './components/word-display/word-display.com
     .main {
       display: flex;
       flex-direction: column;
-
-      & .dark {
-        color: $color-white;
-        background-color: $color-black;
-      }
     }
   `,
 })
-export class AppComponent implements OnInit {
-  isDark = false;
+export class AppComponent implements OnInit, OnDestroy {
+  isDark = true;
+  private subscription: Subscription;
 
-  constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private renderer: Renderer2
-  ) {}
-
-  ngOnInit(): void {
-    this.updateBodyClass();
+  constructor(private sharedService: SharedService) {
+    this.subscription = this.sharedService.isDark$.subscribe(
+      (isDark) => (this.isDark = isDark)
+    );
   }
 
-  toggleTheme() {
+  ngOnInit(): void {
+    // this.updateBodyClass();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('onChanges', changes);
+    // this.updateBodyClass();
+  }
+
+  // logger = effect(() => {
+  //   localStorage.setItem('darkMode', JSON.stringify(this.isDark));
+  // });
+
+  handleThemeToggle(payload: boolean) {
     this.isDark = !this.isDark;
   }
 
-  updateBodyClass() {
-    const bodyClass = 'dark';
-    if (this.isDark) {
-      this.renderer.addClass(this.document.body, bodyClass);
-    } else {
-      this.renderer.removeClass(this.document.body, bodyClass);
-    }
-  }
+  // updateBodyClass() {
+  //   const bodyClass = 'dark';
+
+  //   if (this.isDark) {
+  //     this.renderer.addClass(this.document.body, bodyClass);
+  //   } else {
+  //     this.renderer.removeClass(this.document.body, bodyClass);
+  //   }
+  // }
 }

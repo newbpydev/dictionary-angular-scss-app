@@ -17,7 +17,7 @@ body {
   width: 100vw;
   overflow: hidden;
 
-  &.dark {
+  &:has(.main.dark) {
     background-color: $color-black;
     color: $color-white;
   }
