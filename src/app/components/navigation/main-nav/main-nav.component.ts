@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { APP_BASE_HREF, CommonModule } from '@angular/common';
 import { Component, EventEmitter } from '@angular/core';
 
 import { FontSelectButtonComponent } from '../../buttons/font-select-button/font-select-button.component';
@@ -27,18 +27,27 @@ import { ThemeSwitchComponent } from '../../ui/theme-switch/theme-switch.compone
       display:flex;
       justify-content: space-between;
       align-items: center;
-
     }
 
     .theme-font-group {
       display: flex;
-
-
+      gap: 3.3rem;
     }
 
+    .select-font-group {
+      position: relative;
 
-
-
+      &::after {
+        content: '';
+        position: absolute;
+        right: -16px;
+        top: 50%;
+        width: 1px;
+        height: 32px;
+        background-color: #e9e9e9;
+        transform: translateY(-50%)
+      }
+    }
   `,
   imports: [
     CommonModule,
