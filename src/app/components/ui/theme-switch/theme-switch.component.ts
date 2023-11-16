@@ -3,25 +3,35 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 
 import { SharedService } from '../../../shared.service';
 import { StorageService } from '../../../storage.service';
+import { SvgIconComponent } from '../icons/svg-icon/svg-icon.component';
 
 @Component({
   selector: 'app-theme-switch',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SvgIconComponent],
   // inputs: ['isChecked'],
   // outputs: ['isCheckedChange'],
   template: `
-    <label class="switch">
-      <input
-        type="checkbox"
-        (change)="onCheckChange($event)"
-        [checked]="isChecked"
-      />
-      <span class="slider round"></span>
-    </label>
+    <div class="checkbox-wrapper">
+      <label class="switch">
+        <input
+          type="checkbox"
+          (change)="onCheckChange($event)"
+          [checked]="isChecked"
+        />
+        <span class="slider round"></span>
+      </label>
+
+      <app-svg-icon icon="moon" [stroke]="strokeColor" />
+    </div>
   `,
   styles: `
     @import './utilities/variables';
+
+    .checkbox-wrapper {
+      display: flex;
+      align-items: center;
+    }
 
     /* The switch - the box around the slider */
     .switch {
@@ -90,6 +100,7 @@ import { StorageService } from '../../../storage.service';
 export class ThemeSwitchComponent implements OnInit {
   isChecked: boolean | null = null;
   // isCheckedChange = new EventEmitter<boolean>();
+  strokeColor: string = '';
 
   constructor(
     private sharedService: SharedService,
@@ -99,11 +110,13 @@ export class ThemeSwitchComponent implements OnInit {
   ngOnInit(): void {
     const isItDark = this.storageService.getItem('isDark');
     this.isChecked = isItDark;
+    this.strokeColor = isItDark ? '#A445ED' : '#757575';
   }
 
   onCheckChange(event: Event): void {
     const value = (event.target as HTMLInputElement).checked;
     this.storageService.setItem('isDark', value);
     this.sharedService.setIsDark(value);
+    this.strokeColor = value ? '#A445ED' : '#757575';
   }
 }

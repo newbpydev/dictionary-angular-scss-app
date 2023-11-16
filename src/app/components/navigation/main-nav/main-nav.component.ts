@@ -29,6 +29,7 @@ import { ThemeSwitchComponent } from '../../ui/theme-switch/theme-switch.compone
     header {
       display:flex;
       justify-content: space-between;
+      align-items: center;
 
     }
 
