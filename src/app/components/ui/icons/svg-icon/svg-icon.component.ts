@@ -7,7 +7,10 @@ import { Component } from '@angular/core';
   imports: [CommonModule],
   inputs: ['icon', 'stroke', 'height', 'width'],
   template: `
-    <div class="icon-wrapper">
+    <div
+      class="icon-wrapper"
+      [ngStyle]="{ 'height.px': height, 'width.px': width }"
+    >
       @switch (icon) {
 
       <!-- Search -->
@@ -93,11 +96,12 @@ import { Component } from '@angular/core';
   `,
   styles: `
     .icon-wrapper {
-
+      height: 20px;
 
       & svg {
-        height: 20px;
-        width: 20px;
+        height: 100%;
+        width: 100%;
+        /* width: 20px; */
       }
     }
   `,

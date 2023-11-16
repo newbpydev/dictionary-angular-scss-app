@@ -31,6 +31,7 @@ import { SvgIconComponent } from '../icons/svg-icon/svg-icon.component';
     .checkbox-wrapper {
       display: flex;
       align-items: center;
+      gap: 1.2rem;
     }
 
     /* The switch - the box around the slider */

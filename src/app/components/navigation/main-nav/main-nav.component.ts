@@ -1,31 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter } from '@angular/core';
 
+import { FontSelectButtonComponent } from '../../buttons/font-select-button/font-select-button.component';
 import { LogoComponent } from '../../ui/icons/logo/logo.component';
+import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
 import { ThemeSwitchComponent } from '../../ui/theme-switch/theme-switch.component';
 
 @Component({
   selector: 'app-main-nav',
   standalone: true,
-  imports: [CommonModule, ThemeSwitchComponent, LogoComponent],
-  // inputs: ['isDark'],
-  // outputs: ['isCheckedChange'],
   template: `
     <header class="container top-container">
       <app-logo />
 
       <div class="theme-font-group">
-        <select name="font" id="font">
-          <option value="sans-serif">Sans Serif</option>
-          <option value="serif">Serif</option>
-          <option value="mono">Mono</option>
-        </select>
+        <div class="select-font-group">
+          <app-font-select-button />
+        </div>
 
         <app-theme-switch />
       </div>
     </header>
   `,
-  styles: /*css*/ `
+  styles: /*scss*/ `
     header {
       display:flex;
       justify-content: space-between;
@@ -35,14 +32,20 @@ import { ThemeSwitchComponent } from '../../ui/theme-switch/theme-switch.compone
 
     .theme-font-group {
       display: flex;
-    }
-  `,
-})
-export class MainNavComponent {
-  isDark: boolean | null = null;
-  isCheckedChange = new EventEmitter<boolean>();
 
-  handleChange(event: boolean) {
-    this.isCheckedChange.emit(event);
-  }
-}
+
+    }
+
+
+
+
+  `,
+  imports: [
+    CommonModule,
+    ThemeSwitchComponent,
+    LogoComponent,
+    SvgIconComponent,
+    FontSelectButtonComponent,
+  ],
+})
+export class MainNavComponent {}
