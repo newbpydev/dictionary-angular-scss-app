@@ -23,10 +23,17 @@ import { ThemeSwitchComponent } from '../../ui/theme-switch/theme-switch.compone
     </header>
   `,
   styles: /*scss*/ `
+    @import './utilities/mixins';
+
     header {
       display:flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 2.4rem;
+
+      @include media-query(tablet) {
+        margin-bottom: 5.15rem;
+      }
     }
 
     .theme-font-group {

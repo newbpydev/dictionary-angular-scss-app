@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 
 import { ClickOutsideDirective } from '../../../click-outside.directive';
 import { SharedService } from '../../../shared.service';
+import { StorageService } from '../../../storage.service';
 import { FontType } from '../../../types/shared';
 import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
 
@@ -94,8 +95,14 @@ export class FontSelectButtonComponent {
   isDark: boolean = false;
   selectedFont: FontType = 'sans serif';
 
-  constructor(private sharedService: SharedService) {
+  constructor(
+    private sharedService: SharedService,
+    private storageService: StorageService
+  ) {
     this.sharedService.isDark$.subscribe((isDark) => (this.isDark = isDark));
+    this.sharedService.selectedFont$.subscribe(
+      (selectedFont) => (this.selectedFont = selectedFont)
+    );
   }
 
   toggleSelectMenu() {
@@ -109,5 +116,6 @@ export class FontSelectButtonComponent {
   handleFontChange(font: FontType) {
     this.selectedFont = font;
     this.sharedService.setSelectedFont(font);
+    this.storageService.setItem('selectedFont', font);
   }
 }

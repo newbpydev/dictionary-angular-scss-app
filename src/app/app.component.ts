@@ -97,6 +97,7 @@ import { FontType } from './types/shared';
 export class AppComponent implements OnInit, OnDestroy {
   isDark = false;
   selectedFont: FontType = 'sans serif';
+
   private isDarkSubscription: Subscription;
   private selectedFontSubscription: Subscription;
 
@@ -118,7 +119,11 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const isDark = this.storageService.getItem('isDark');
+      const selectedFont = this.storageService.getItem('selectedFont');
+
       this.sharedService.setIsDark(isDark);
+      this.sharedService.setSelectedFont(selectedFont);
+
       this.isDarkSubscription = this.sharedService.isDark$.subscribe(
         (state) => (this.isDark = state)
       );
