@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { StorageService } from './storage.service';
 
@@ -10,6 +10,7 @@ import { StorageService } from './storage.service';
 export class SharedService {
   private isDarkSubject = new BehaviorSubject<boolean>(false);
   isDark$ = this.isDarkSubject.asObservable();
+  // selectedFont =
 
   constructor(private storageService: StorageService) {}
 

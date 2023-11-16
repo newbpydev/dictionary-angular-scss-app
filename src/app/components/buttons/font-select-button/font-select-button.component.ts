@@ -1,23 +1,31 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
+import { ClickOutsideDirective } from '../../../click-outside.directive';
 import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
+
+type FontType = 'sans-serif' | 'serif' | 'mono';
 
 @Component({
   selector: 'app-font-select-button',
   standalone: true,
   template: `
     <div class="font-selection-wrapper">
-      <button class="font-btn" (click)="toggleSelectMenu()">
+      <button
+        class="font-btn"
+        (click)="toggleSelectMenu()"
+        appClickOutside
+        (clickOutside)="isSelecting && handleOutsideClick()"
+      >
         <span>Sans Serif</span>
         <app-svg-icon icon="arrow-down" width="12" height="6" />
       </button>
 
       @if (isSelecting) {
       <ul class="font-options">
-        <li>Sans Serif</li>
-        <li>Serif</li>
-        <li>Mono</li>
+        <li (click)="handleFontChange('sans-serif')">Sans Serif</li>
+        <li (click)="handleFontChange('serif')">Serif</li>
+        <li (click)="handleFontChange('mono')">Mono</li>
       </ul>
       }
     </div>
@@ -66,12 +74,22 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
     }
 
   `,
-  imports: [CommonModule, SvgIconComponent],
+  imports: [CommonModule, SvgIconComponent, ClickOutsideDirective],
 })
 export class FontSelectButtonComponent {
-  isSelecting: boolean = true;
+  isSelecting: boolean = false;
+  selectedFont: FontType = 'sans-serif';
 
   toggleSelectMenu() {
     this.isSelecting = !this.isSelecting;
+  }
+
+  handleOutsideClick() {
+    this.isSelecting = false;
+  }
+
+  handleFontChange(font: FontType) {
+    this.selectedFont = font;
+    console.log(this.selectedFont);
   }
 }
