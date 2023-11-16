@@ -32,10 +32,12 @@ import { ThemeSwitchComponent } from '../../ui/theme-switch/theme-switch.compone
     .theme-font-group {
       display: flex;
       gap: 3.3rem;
+      height: 100%;
     }
 
     .select-font-group {
       position: relative;
+      display: flex;
 
       &::after {
         content: '';

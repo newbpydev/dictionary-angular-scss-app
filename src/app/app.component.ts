@@ -18,6 +18,7 @@ import { MainNavComponent } from './components/navigation/main-nav/main-nav.comp
 import { WordDisplayComponent } from './components/word-display/word-display.component';
 import { SharedService } from './shared.service';
 import { StorageService } from './storage.service';
+import { FontType } from './types/shared';
 
 @Component({
   selector: 'app-root',
@@ -36,7 +37,15 @@ import { StorageService } from './storage.service';
   /*                                  Template                                  */
   /* -------------------------------------------------------------------------- */
   template: /*html*/ `
-    <main class="main" [ngClass]="[isDark ? 'dark' : '', 'monkey']">
+    <main
+      class="main"
+      [ngClass]="[
+        isDark ? 'dark' : '',
+        selectedFont === 'sans serif' ? 'sans-serif' : '',
+        selectedFont === 'serif' ? 'serif' : '',
+        selectedFont === 'mono' ? 'mono' : ''
+      ]"
+    >
       <app-main-nav />
 
       <app-searchbar />
@@ -67,6 +76,18 @@ import { StorageService } from './storage.service';
         background-color: $color-black;
         color: $color-white;
       }
+
+      &.sans-serif {
+        font-family: $font-inter;
+      }
+
+      &.serif {
+        font-family: $font-lora;
+      }
+
+      &.mono {
+        font-family: $font-inconsolata;
+      }
     }
   `,
 })
@@ -75,7 +96,9 @@ import { StorageService } from './storage.service';
 /* -------------------------------------------------------------------------- */
 export class AppComponent implements OnInit, OnDestroy {
   isDark = false;
-  private subscription: Subscription;
+  selectedFont: FontType = 'sans serif';
+  private isDarkSubscription: Subscription;
+  private selectedFontSubscription: Subscription;
 
   /* ------------------------------- Constructor ------------------------------ */
   constructor(
@@ -83,8 +106,11 @@ export class AppComponent implements OnInit, OnDestroy {
     private storageService: StorageService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    this.subscription = this.sharedService.isDark$.subscribe(
+    this.isDarkSubscription = this.sharedService.isDark$.subscribe(
       (isDark) => (this.isDark = isDark)
+    );
+    this.selectedFontSubscription = this.sharedService.selectedFont$.subscribe(
+      (selectedFont) => (this.selectedFont = selectedFont)
     );
   }
 
@@ -93,7 +119,7 @@ export class AppComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       const isDark = this.storageService.getItem('isDark');
       this.sharedService.setIsDark(isDark);
-      this.subscription = this.sharedService.isDark$.subscribe(
+      this.isDarkSubscription = this.sharedService.isDark$.subscribe(
         (state) => (this.isDark = state)
       );
     }
@@ -101,6 +127,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   /* -------------------------------- OnDestroy ------------------------------- */
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.isDarkSubscription.unsubscribe();
+    this.selectedFontSubscription.unsubscribe();
   }
 }
