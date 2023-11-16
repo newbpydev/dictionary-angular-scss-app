@@ -33,7 +33,11 @@ import { Component } from '@angular/core';
     @import './utilities/mixins';
 
     .logo-wrapper {
-      /* height: 3.2rem; */
+      height: 3.2rem;
+
+      @include media-query(tablet) {
+        height: 3.65rem;
+      }
 
       & svg {
         height: 32px;
