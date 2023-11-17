@@ -1,11 +1,58 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
+import { PlayButtonComponent } from '../ui/play-button/play-button.component';
+
 @Component({
   selector: 'app-word-display',
   standalone: true,
-  imports: [CommonModule],
-  template: ` <section class="container">word-display works!</section> `,
-  styles: ``,
+  imports: [CommonModule, PlayButtonComponent],
+  template: `
+    <section class="container word-display__wrapper">
+      <div class="word-display__group">
+        <h1>keyboard</h1>
+        <h2>{{ '/ˈkiːbɔːd/' }}</h2>
+      </div>
+
+      <app-play-button />
+    </section>
+  `,
+  styles: `
+    @import './utilities/variables';
+    @import './utilities/mixins';
+
+    .word-display {
+      &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3.2rem;
+      }
+
+      &__group {
+        display: flex;
+        flex-direction: column;
+        gap: .8rem;
+
+        & h1 {
+          font-size: 3.2rem;
+          font-weight: 700;
+
+          @include media-query(tablet) {
+            font-size: 6.4rem;
+          }
+        }
+
+        & h2 {
+          font-size: 1.8rem;
+          color: $color-purple;
+
+          @include media-query(tablet) {
+            font-size: 2.4rem;
+          }
+        }
+      }
+    }
+  `,
 })
 export class WordDisplayComponent {}
