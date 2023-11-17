@@ -8,6 +8,7 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 
 import { DefinitionCardComponent } from './components/card/definition-card/definition-card.component';

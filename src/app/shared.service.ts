@@ -15,7 +15,7 @@ export class SharedService {
   private selectedFontSubject = new BehaviorSubject<FontType>('sans serif');
   selectedFont$ = this.selectedFontSubject.asObservable();
 
-  constructor(private storageService: StorageService) {}
+  // constructor(private storageService: StorageService) {}
 
   setIsDark(value: boolean) {
     this.isDarkSubject.next(value);

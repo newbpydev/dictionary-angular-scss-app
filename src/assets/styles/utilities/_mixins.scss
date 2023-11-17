@@ -17,3 +17,17 @@
     }
   }
 }
+
+@mixin theme-light {
+  $bg-color: $color-white;
+  $text-color: $color-gray;
+
+  @content;
+}
+
+@mixin theme-dark {
+  $bg-color: $color-black;
+  $text-color: $color-white;
+
+  @content;
+}
