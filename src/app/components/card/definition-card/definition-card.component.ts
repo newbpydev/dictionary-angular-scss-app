@@ -69,6 +69,12 @@ import { Meaning } from '../../../types/shared';
       font-weight: 700;
       margin-bottom: 3.2rem;
 
+      @include media-query(tablet) {
+        font-size: 2.4rem;
+        gap: 2rem;
+        margin-bottom: 4rem;
+      }
+
       &:after {
         content: '';
         height: 1px;
@@ -81,23 +87,35 @@ import { Meaning } from '../../../types/shared';
       font-size: 1.6rem;
       color: $color-medium-gray;
       margin-bottom: 1.7rem;
+
+      @include media-query(tablet) {
+        font-size: 2rem;
+        margin-bottom: 2.5rem;
+      }
     }
     &__meaning-list {
       margin-bottom: 3.2rem;
       display: flex;
       flex-direction: column;
       gap: 1.3rem;
+
+      @include media-query(tablet) {
+        margin-left: 2.2rem;
+        margin-bottom: 4rem;
+      }
     }
     &__meaning-item {
       position: relative;
       display: flex;
 
+      @include media-query(tablet) {
+        font-size: 1.8rem;
+      }
+
       &::before {
         content: '\u2022';
         color: $color-purple;
         font-size: 1.2rem;
-        /* height: .5rem; */
-        /* border-radius: 10rem; */
         margin-right:2rem;
       }
 
@@ -113,6 +131,12 @@ import { Meaning } from '../../../types/shared';
       gap: 2.4rem;
       font-size: 1.6rem;
       margin-bottom: 3.2rem;
+
+      @include media-query(tablet) {
+        font-size: 2rem;
+        gap: 2.2rem;
+        margin-bottom: 4rem;
+      }
     }
     &__other-word {
       font-weight: 700;

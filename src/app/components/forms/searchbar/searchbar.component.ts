@@ -1,5 +1,7 @@
+import { Subscription } from 'rxjs';
+
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -82,16 +84,26 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
   }
   `,
 })
-export class SearchbarComponent implements OnInit {
+export class SearchbarComponent implements OnInit, OnDestroy {
   searchForm = new FormGroup<{ searchInput: FormControl<string | null> }>({
     searchInput: new FormControl('', Validators.required),
   });
   isDark = false;
 
-  constructor(private sharedService: SharedService) {}
+  private isDarkSubscription: Subscription;
+
+  constructor(private sharedService: SharedService) {
+    this.isDarkSubscription = this.sharedService.isDark$.subscribe(
+      (isDark) => (this.isDark = isDark)
+    );
+  }
 
   ngOnInit() {
-    this.sharedService.isDark$.subscribe((isDark) => (this.isDark = isDark));
+    // this.sharedService.isDark$.subscribe((isDark) => (this.isDark = isDark));
+  }
+
+  ngOnDestroy(): void {
+    this.isDarkSubscription.unsubscribe();
   }
 
   onSubmit() {
