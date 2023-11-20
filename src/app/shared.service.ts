@@ -15,8 +15,10 @@ export class SharedService {
   private selectedFontSubject = new BehaviorSubject<FontType>('sans serif');
   selectedFont$ = this.selectedFontSubject.asObservable();
 
-  private wordResultsSubject = new BehaviorSubject<DictionaryResult[]>([]);
-  wordResults$ = this.wordResultsSubject.asObservable();
+  private dictionaryResultsSubject = new BehaviorSubject<DictionaryResult[]>(
+    []
+  );
+  dictionaryResults$ = this.dictionaryResultsSubject.asObservable();
 
   // constructor(private storageService: StorageService) {}
 
@@ -28,7 +30,7 @@ export class SharedService {
     this.selectedFontSubject.next(value);
   }
 
-  setWordResults(value: DictionaryResult[]) {
-    this.wordResultsSubject.next(value);
+  setDictionaryResults(value: DictionaryResult[]) {
+    this.dictionaryResultsSubject.next(value);
   }
 }

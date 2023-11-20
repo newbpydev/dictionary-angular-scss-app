@@ -11,6 +11,7 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 
+import { ApiService } from './api.service';
 import { DefinitionCardComponent } from './components/card/definition-card/definition-card.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SearchbarComponent } from './components/forms/searchbar/searchbar.component';
@@ -19,7 +20,7 @@ import { MainNavComponent } from './components/navigation/main-nav/main-nav.comp
 import { WordDisplayComponent } from './components/word-display/word-display.component';
 import { SharedService } from './shared.service';
 import { StorageService } from './storage.service';
-import { FontType } from './types/shared';
+import { DictionaryResult, FontType } from './types/shared';
 
 @Component({
   selector: 'app-root',
@@ -98,22 +99,31 @@ import { FontType } from './types/shared';
 export class AppComponent implements OnInit, OnDestroy {
   isDark = false;
   selectedFont: FontType = 'sans serif';
+  dictionaryResult: DictionaryResult[] = [];
 
   private isDarkSubscription: Subscription;
   private selectedFontSubscription: Subscription;
+  private dictionaryResultSubscription: Subscription;
 
   /* ------------------------------- Constructor ------------------------------ */
   constructor(
     private sharedService: SharedService,
     private storageService: StorageService,
+    private apiService: ApiService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isDarkSubscription = this.sharedService.isDark$.subscribe(
       (isDark) => (this.isDark = isDark)
     );
+
     this.selectedFontSubscription = this.sharedService.selectedFont$.subscribe(
       (selectedFont) => (this.selectedFont = selectedFont)
     );
+
+    this.dictionaryResultSubscription =
+      this.sharedService.dictionaryResults$.subscribe(
+        (results) => (this.dictionaryResult = results)
+      );
   }
 
   /* --------------------------------- OnInit --------------------------------- */
@@ -135,5 +145,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.isDarkSubscription.unsubscribe();
     this.selectedFontSubscription.unsubscribe();
+    this.dictionaryResultSubscription.unsubscribe();
   }
 }
