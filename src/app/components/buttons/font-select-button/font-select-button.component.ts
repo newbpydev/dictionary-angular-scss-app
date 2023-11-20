@@ -24,9 +24,18 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
 
       @if (isSelecting) {
       <ul class="font-options" [ngClass]="isDark ? 'dark' : ''">
-        <li (click)="handleFontChange('sans serif')">Sans Serif</li>
-        <li (click)="handleFontChange('serif')">Serif</li>
-        <li (click)="handleFontChange('mono')">Mono</li>
+        <li
+          class="font-options__sans-serif"
+          (click)="handleFontChange('sans serif')"
+        >
+          Sans Serif
+        </li>
+        <li class="font-options__serif" (click)="handleFontChange('serif')">
+          Serif
+        </li>
+        <li class="font-options__mono" (click)="handleFontChange('mono')">
+          Mono
+        </li>
       </ul>
       }
     </div>
@@ -72,7 +81,8 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
 
         &.dark {
           background: $color-gray;
-          box-shadow: 0px 5px 30px 0px rgba(255, 255, 255, .1);
+          box-shadow: 0px 5px 30px 0px $color-purple;
+          /* box-shadow: 0px 5px 30px 0px rgba(255, 255, 255, .1); */
         }
 
         & li {
@@ -83,6 +93,16 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
           &:hover {
             color: $color-purple;
           }
+        }
+
+        &__sans-serif {
+          font-family: $font-inter;
+        }
+        &__serif {
+          font-family: $font-lora;
+        }
+        &__mono {
+          font-family: $font-inconsolata;
         }
       }
     }

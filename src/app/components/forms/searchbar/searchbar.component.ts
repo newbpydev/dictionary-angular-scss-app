@@ -61,6 +61,12 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
       border-radius: 1.6rem;
       font-size: 1.6rem;
       font-weight: 700;
+      border: 1px solid $color-light;
+      caret-color: $color-purple;
+
+      /* &:focus {
+        border: 1px solid $color-purple;
+      } */
 
       @include media-query(tablet) {
         font-size: 2rem;
@@ -69,7 +75,12 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
       }
 
       &.dark {
+        border: 1px solid $color-dark-gray;
         background-color: $color-dark-gray;
+      }
+
+      &:focus {
+        border: 1px solid $color-purple;
       }
     }
 

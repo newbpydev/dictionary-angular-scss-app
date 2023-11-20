@@ -141,6 +141,11 @@ import { Meaning } from '../../../types/shared';
     &__other-word {
       font-weight: 700;
       color: $color-purple;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
     &__other-word-title {
       /* font-size: 1.6rem; */
