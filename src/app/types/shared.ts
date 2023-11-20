@@ -1,5 +1,6 @@
 export type FontType = 'sans serif' | 'serif' | 'mono';
 
+// Dictionary types
 export interface Phonetic {
   text: string;
   audio: string;
@@ -26,7 +27,7 @@ export interface License {
   url: string;
 }
 
-export interface Dictionary {
+export interface DictionaryResult {
   word: string;
   phonetic: string;
   phonetics: Phonetic[];

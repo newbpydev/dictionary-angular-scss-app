@@ -1,8 +1,10 @@
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
+import { DictionaryResult } from './types/shared';
 
 @Injectable({
   providedIn: 'root',
@@ -10,9 +12,9 @@ import { Injectable } from '@angular/core';
 export class ApiService {
   constructor(private http: HttpClient) {}
 
-  getDefinition(keyword?: string) {
+  getDefinition(keyword?: string): Observable<DictionaryResult[]> {
     return this.http
-      .get('http://localhost:3000/definition')
+      .get<DictionaryResult[]>('http://localhost:3000/definition')
       .pipe(catchError(this.handleError));
   }
 
