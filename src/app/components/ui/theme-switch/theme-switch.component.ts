@@ -60,6 +60,10 @@ import { SvgIconComponent } from '../icons/svg-icon/svg-icon.component';
       background-color: #979797;
       -webkit-transition: .4s;
       transition: .4s;
+
+       &:hover {
+        background-color: $color-purple;
+      }
     }
 
     .slider:before {
@@ -76,6 +80,10 @@ import { SvgIconComponent } from '../icons/svg-icon/svg-icon.component';
 
     input:checked + .slider {
       background-color: $color-purple;
+
+      &:hover {
+        background-color: #979797;
+      }
     }
 
     input:focus + .slider {
@@ -91,6 +99,8 @@ import { SvgIconComponent } from '../icons/svg-icon/svg-icon.component';
     /* Rounded sliders */
     .slider.round {
       border-radius: 34px;
+
+
     }
 
     .slider.round:before {
