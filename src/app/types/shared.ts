@@ -35,3 +35,9 @@ export interface DictionaryResult {
   license: License;
   sourceUrls: string[];
 }
+
+export interface DictionaryError {
+  title: string;
+  message: string;
+  resolution: string;
+}

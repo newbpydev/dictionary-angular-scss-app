@@ -21,7 +21,7 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
       <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
         <input
           type="text"
-          placeholder="Keyboard"
+          placeholder="Search for any word..."
           class="searchbar-input"
           [ngClass]="isDark ? 'dark' : ''"
           formControlName="searchInput"
@@ -32,9 +32,14 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
           height="15"
           width="15"
           class="searchbar-icon"
-          stroke="#fff"
+          stroke="#A445ED"
         />
       </form>
+
+      @if (searchForm.status === 'INVALID' && !searchForm.pristine) {
+
+      <p class="searchbar__error">Whoops, can't be empty...</p>
+      }
     </section>
   `,
   styles: `
@@ -70,6 +75,10 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
         border: 1px solid $color-purple;
       } */
 
+      &::placeholder {
+        opacity: 0.25;
+      }
+
       @include media-query(tablet) {
         font-size: 2rem;
         padding-top: 2rem;
@@ -95,6 +104,18 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
       top: 50%;
       right: 2.445rem;
       transform: translateY(-50%);
+    }
+
+    &__error {
+      color: $color-red;
+      font-size: 1.6rem;
+      position: absolute;
+      bottom: -2.4rem;
+
+      @include media-query(tablet) {
+        font-size: 2rem;
+        bottom: -2.8rem;
+      }
     }
 
 
