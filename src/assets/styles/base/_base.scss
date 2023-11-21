@@ -42,10 +42,6 @@ body {
   margin-top: 2.4rem;
 
   @include media-query(tablet) {
-    margin-top: 4rem;
-  }
-
-  @include media-query(desktop) {
     margin-top: 5.8rem;
   }
 }

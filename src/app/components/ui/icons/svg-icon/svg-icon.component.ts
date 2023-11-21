@@ -37,6 +37,7 @@ import { Component } from '@angular/core';
         width="75"
         height="75"
         viewBox="0 0 75 75"
+        class="play"
       >
         <g [attr.fill]="stroke" fill-rule="evenodd">
           <circle cx="37.5" cy="37.5" r="37.5" opacity=".25" />
@@ -103,6 +104,34 @@ import { Component } from '@angular/core';
         width: 100%;
         /* width: 20px; */
       }
+    }
+
+    .play {
+      cursor: pointer;
+
+      & circle {
+        transition: all .3s ease-in-out;
+
+        &+path {
+          transition: all .3s ease-in-out;
+        }
+
+        &:hover {
+          opacity: 1;
+
+          &+path {
+            fill: #fff;
+          }
+        }
+      }
+
+      /* &:hover {
+        transition: all 3s ease-in-out;
+
+        & path {
+          fill: white;
+        }
+      } */
     }
   `,
 })

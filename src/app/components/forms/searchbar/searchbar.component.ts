@@ -25,14 +25,16 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
           class="searchbar-input"
           [ngClass]="isDark ? 'dark' : ''"
           formControlName="searchInput"
+          autofocus
+        />
+        <app-svg-icon
+          icon="search"
+          height="15"
+          width="15"
+          class="searchbar-icon"
+          stroke="#fff"
         />
       </form>
-      <app-svg-icon
-        icon="search"
-        height="15"
-        width="15"
-        class="searchbar-icon"
-      />
     </section>
   `,
   styles: `
@@ -79,8 +81,12 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
         background-color: $color-dark-gray;
       }
 
-      &:focus {
+      /* &:focus {
         border: 1px solid $color-purple;
+      } */
+
+      &:invalid {
+        border: 1px solid $color-red;
       }
     }
 
@@ -97,7 +103,7 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
 })
 export class SearchbarComponent implements OnInit, OnDestroy {
   searchForm = new FormGroup<{ searchInput: FormControl<string | null> }>({
-    searchInput: new FormControl('', Validators.required),
+    searchInput: new FormControl('', [Validators.required]),
   });
   isDark = false;
 
@@ -111,6 +117,10 @@ export class SearchbarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.sharedService.isDark$.subscribe((isDark) => (this.isDark = isDark));
+    console.log(this.searchForm);
+    if (!this.searchForm.pristine) {
+      console.log('not clean');
+    }
   }
 
   ngOnDestroy(): void {
