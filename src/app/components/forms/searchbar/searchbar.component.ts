@@ -85,9 +85,9 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
         border: 1px solid $color-purple;
       } */
 
-      &:invalid {
-        border: 1px solid $color-red;
-      }
+      &.ng-dirty.ng-invalid {
+      border: 1px solid $color-red;
+    }
     }
 
     &-icon {
@@ -95,9 +95,9 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
       top: 50%;
       right: 2.445rem;
       transform: translateY(-50%);
-
-
     }
+
+
   }
   `,
 })
