@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import { StorageService } from './storage.service';
-import { DictionaryResult, FontType } from './types/shared';
+import { DictionaryError, DictionaryResult, FontType } from './types/shared';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +15,9 @@ export class SharedService {
   private selectedFontSubject = new BehaviorSubject<FontType>('sans serif');
   selectedFont$ = this.selectedFontSubject.asObservable();
 
-  private dictionaryResultsSubject = new BehaviorSubject<DictionaryResult[]>(
-    []
-  );
+  private dictionaryResultsSubject = new BehaviorSubject<
+    DictionaryResult[] | DictionaryError
+  >([]);
   dictionaryResults$ = this.dictionaryResultsSubject.asObservable();
 
   // constructor(private storageService: StorageService) {}
@@ -30,7 +30,7 @@ export class SharedService {
     this.selectedFontSubject.next(value);
   }
 
-  setDictionaryResults(value: DictionaryResult[]) {
+  setDictionaryResults(value: DictionaryResult[] | DictionaryError) {
     this.dictionaryResultsSubject.next(value);
   }
 }

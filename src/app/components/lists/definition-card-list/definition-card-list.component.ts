@@ -2,7 +2,14 @@ import { Subscription } from 'rxjs';
 
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, Inject, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 
 import { ApiService } from '../../../api.service';
 import { DictionaryResult, Meaning } from '../../../types/shared';
@@ -22,8 +29,11 @@ import { DefinitionCardComponent } from '../../card/definition-card/definition-c
   styles: ``,
 })
 export class DefinitionCardListComponent implements OnInit, OnDestroy {
+  @Input() meanings: Meaning[] = [];
+
   private subscription!: Subscription;
-  meanings: Meaning[] = [];
+  // meanings: Meaning[] = [];
+
   apiService = inject(ApiService);
 
   // constructor(private apiService: ApiService) {}

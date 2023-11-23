@@ -26,17 +26,3 @@ $fs-body-m: 15px;
 $fs-body-s: 14px;
 
 $lh-body-m: 24px;
-
-@include media-query(tablet) {
-  $fs-heading-l: 64px;
-  $fs-heading-m: 24px;
-  $fs-heading-s: 20px;
-  $fs-body-m: 18px;
-  $fs-body-s: 14px;
-
-  $lh-heading-l: 77px;
-  $lh-heading-m: 29px;
-  $lh-heading-s: 24px;
-  $lh-body-m: 24px;
-  $lh-body-s: 17px;
-}

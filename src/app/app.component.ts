@@ -3,10 +3,13 @@ import { Subscription } from 'rxjs';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   Component,
+  DoCheck,
   Inject,
+  OnChanges,
   OnDestroy,
   OnInit,
   PLATFORM_ID,
+  SimpleChanges,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
@@ -18,7 +21,7 @@ import { MainNavComponent } from './components/navigation/main-nav/main-nav.comp
 import { WordDisplayComponent } from './components/word-display/word-display.component';
 import { SharedService } from './shared.service';
 import { StorageService } from './storage.service';
-import { DictionaryResult, FontType } from './types/shared';
+import { DictionaryError, DictionaryResult, FontType } from './types/shared';
 
 @Component({
   selector: 'app-root',
@@ -47,8 +50,7 @@ import { DictionaryResult, FontType } from './types/shared';
       ]"
     >
       <app-main-nav />
-
-      <app-searchbar />
+      <app-searchbar [isDark]="isDark" />
 
       <router-outlet></router-outlet>
     </main>
@@ -89,10 +91,10 @@ import { DictionaryResult, FontType } from './types/shared';
 /* -------------------------------------------------------------------------- */
 /*                                App Component                               */
 /* -------------------------------------------------------------------------- */
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy, OnChanges, DoCheck {
   isDark = false;
   selectedFont: FontType = 'sans serif';
-  dictionaryResult: DictionaryResult[] = [];
+  dictionaryResult: DictionaryResult[] | DictionaryError = [];
 
   private isDarkSubscription: Subscription;
   private selectedFontSubscription: Subscription;
@@ -132,6 +134,21 @@ export class AppComponent implements OnInit, OnDestroy {
         (state) => (this.isDark = state)
       );
     }
+    console.log('about to subscribe results');
+
+    this.dictionaryResultSubscription =
+      this.sharedService.dictionaryResults$.subscribe(
+        (results) => (this.dictionaryResult = results)
+      );
+    console.log('finished subscribe results');
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('did it change?', changes);
+  }
+
+  ngDoCheck(): void {
+    console.log('app:do check');
   }
 
   /* -------------------------------- OnDestroy ------------------------------- */

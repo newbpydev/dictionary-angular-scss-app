@@ -2,17 +2,22 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
+import { SharedService } from './shared.service';
 import { DictionaryResult } from './types/shared';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  constructor(private http: HttpClient) {}
+  http = inject(HttpClient);
+  sharedService = inject(SharedService);
 
-  getDefinition(keyword?: string): Observable<DictionaryResult[]> {
+  constructor() {}
+
+  getDefinition(keyword?: string | null): Observable<DictionaryResult[]> {
+    console.log(keyword);
     return this.http
       .get<DictionaryResult[]>('http://localhost:3000/definition')
       .pipe(catchError(this.handleError));

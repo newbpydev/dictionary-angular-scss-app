@@ -1,7 +1,15 @@
-import { Subscription } from 'rxjs';
+import { EMPTY, Subscription } from 'rxjs';
 
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  DoCheck,
+  inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -9,7 +17,9 @@ import {
   Validators,
 } from '@angular/forms';
 
+import { ApiService } from '../../../api.service';
 import { SharedService } from '../../../shared.service';
+import { DictionaryResult } from '../../../types/shared';
 import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
 
 @Component({
@@ -122,35 +132,62 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
   }
   `,
 })
-export class SearchbarComponent implements OnInit, OnDestroy {
+export class SearchbarComponent implements OnInit, OnDestroy, DoCheck {
   searchForm = new FormGroup<{ searchInput: FormControl<string | null> }>({
     searchInput: new FormControl('', [Validators.required]),
   });
-  isDark = false;
+  @Input() isDark = false;
+
+  private sharedService = inject(SharedService);
+  private apiService = inject(ApiService);
 
   private isDarkSubscription: Subscription;
+  private apiServiceSubscription: Subscription = EMPTY.subscribe();
 
-  constructor(private sharedService: SharedService) {
+  constructor() {
+    // private apiService: ApiService // private sharedService: SharedService,
     this.isDarkSubscription = this.sharedService.isDark$.subscribe(
       (isDark) => (this.isDark = isDark)
     );
   }
 
   ngOnInit() {
-    // this.sharedService.isDark$.subscribe((isDark) => (this.isDark = isDark));
+    this.sharedService.isDark$.subscribe((isDark) => (this.isDark = isDark));
     console.log(this.searchForm);
-    if (!this.searchForm.pristine) {
-      console.log('not clean');
-    }
+  }
+
+  ngDoCheck(): void {
+    console.log('did it check');
+    console.log(this.sharedService.dictionaryResults$);
+    console.log(this.sharedService.isDark$);
   }
 
   ngOnDestroy(): void {
     this.isDarkSubscription.unsubscribe();
+    this.apiServiceSubscription.unsubscribe();
   }
 
   onSubmit() {
     if (this.searchForm.status === 'VALID') {
       console.log('submitted', this.searchForm.value.searchInput);
+      // let results: DictionaryResult[] = [];
+
+      this.apiServiceSubscription = this.apiService
+        .getDefinition(this.searchForm.value.searchInput)
+        .subscribe({
+          next: (value) => {
+            const results: DictionaryResult[] = value;
+            this.sharedService.setDictionaryResults(results);
+          },
+          complete() {
+            console.log('completed');
+          },
+          error(err) {
+            console.log('error in apiService of searchbar');
+          },
+        });
     }
+
+    console.log('isDark', this.isDark);
   }
 }
