@@ -8,11 +8,9 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 
 import { ApiService } from './api.service';
-import { DefinitionCardComponent } from './components/card/definition-card/definition-card.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SearchbarComponent } from './components/forms/searchbar/searchbar.component';
 import { DefinitionCardListComponent } from './components/lists/definition-card-list/definition-card-list.component';
@@ -52,12 +50,6 @@ import { DictionaryResult, FontType } from './types/shared';
 
       <app-searchbar />
 
-      <app-word-display />
-
-      <app-definition-card-list />
-
-      <app-footer />
-
       <router-outlet></router-outlet>
     </main>
   `,
@@ -73,6 +65,7 @@ import { DictionaryResult, FontType } from './types/shared';
       flex-direction: column;
       width: 100%;
       height: 100%;
+      min-height: 100vh;
 
       &.dark {
         background-color: $color-black;
