@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { Meaning } from '../../../types/shared';
 
 @Component({
   selector: 'app-definition-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   inputs: ['meaning'],
   template: `
     <article class="definition-card">
@@ -37,7 +38,7 @@ import { Meaning } from '../../../types/shared';
         <h4 class="definition-card__other-word-title">Antonyms</h4>
         <p class="definition-card__other-word">
           @for (word of meaning.antonyms; track $index) {
-          <span>{{ word }}</span>
+          <a [routerLink]="['/search', word]">{{ word }}</a> {{ ' ' }}
           }
         </p>
       </div>
@@ -46,7 +47,7 @@ import { Meaning } from '../../../types/shared';
         <h4 class="definition-card__other-word-title">Synonyms</h4>
         <p class="definition-card__other-word">
           @for (word of meaning.synonyms; track $index) {
-          <span>{{ word }}</span>
+          <a [routerLink]="['/search', word]">{{ word }}</a> {{ ' ' }}
           }
         </p>
       </div>
@@ -138,7 +139,7 @@ import { Meaning } from '../../../types/shared';
         margin-bottom: 4rem;
       }
     }
-    &__other-word {
+    &__other-word a {
       font-weight: 700;
       color: $color-purple;
       cursor: pointer;

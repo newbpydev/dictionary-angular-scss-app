@@ -91,7 +91,7 @@ import { DictionaryError, DictionaryResult, FontType } from './types/shared';
 /* -------------------------------------------------------------------------- */
 /*                                App Component                               */
 /* -------------------------------------------------------------------------- */
-export class AppComponent implements OnInit, OnDestroy, OnChanges, DoCheck {
+export class AppComponent implements OnInit, OnDestroy {
   isDark = false;
   selectedFont: FontType = 'sans serif';
   dictionaryResult: DictionaryResult[] | DictionaryError = [];
@@ -134,22 +134,18 @@ export class AppComponent implements OnInit, OnDestroy, OnChanges, DoCheck {
         (state) => (this.isDark = state)
       );
     }
-    console.log('about to subscribe results');
 
     this.dictionaryResultSubscription =
       this.sharedService.dictionaryResults$.subscribe(
         (results) => (this.dictionaryResult = results)
       );
-    console.log('finished subscribe results');
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('did it change?', changes);
-  }
-
-  ngDoCheck(): void {
-    console.log('app:do check');
-  }
+  // ngDoCheck(): void {
+  //   console.log('app:do check');
+  //   console.log(this.dictionaryResult);
+  //   console.log(this.dictionaryResultSubscription);
+  // }
 
   /* -------------------------------- OnDestroy ------------------------------- */
   ngOnDestroy(): void {

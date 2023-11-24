@@ -43,7 +43,7 @@ import { DictionaryError, DictionaryResult } from '../../types/shared';
   `,
   styles: ``,
 })
-export class DefinitionSectionComponent implements OnInit, OnDestroy, DoCheck {
+export class DefinitionSectionComponent implements OnInit, OnDestroy {
   searchResults: DictionaryError | DictionaryResult[] = [];
   sharedService = inject(SharedService);
   @Input() keyword: string = '';
@@ -61,10 +61,6 @@ export class DefinitionSectionComponent implements OnInit, OnDestroy, DoCheck {
 
   ngOnDestroy(): void {
     this.searchResultsSubscription.unsubscribe();
-  }
-
-  ngDoCheck(): void {
-    console.log(this.keyword);
   }
 
   isDictionaryResult(value: unknown): value is DictionaryResult[] {

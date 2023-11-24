@@ -32,7 +32,7 @@ import { DefinitionCardComponent } from '../../card/definition-card/definition-c
 export class DefinitionCardListComponent implements OnInit, OnDestroy {
   @Input({ required: true }) meanings: Meaning[] = [];
 
-  private subscription!: Subscription;
+  // private subscription!: Subscription;
   // meanings: Meaning[] = [];
 
   apiService = inject(ApiService);
@@ -55,6 +55,6 @@ export class DefinitionCardListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 }

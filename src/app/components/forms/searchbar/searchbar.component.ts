@@ -1,6 +1,7 @@
-import { EMPTY, Subscription } from 'rxjs';
+import { EMPTY, Observable, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import {
   Component,
   DoCheck,
@@ -16,6 +17,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  ParamMap,
+  Router,
+} from '@angular/router';
 
 import { ApiService } from '../../../api.service';
 import { SharedService } from '../../../shared.service';
@@ -132,27 +139,41 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
   }
   `,
 })
+/* -------------------------------------------------------------------------- */
+/*                             Searchbar Component                            */
+/* -------------------------------------------------------------------------- */
 export class SearchbarComponent implements OnInit, OnDestroy {
   searchForm = new FormGroup<{ searchInput: FormControl<string | null> }>({
     searchInput: new FormControl('', [Validators.required]),
   });
   @Input() isDark = false;
 
+  // keyword$ = Observable<DictionaryResult[]>;
+
   private sharedService = inject(SharedService);
   private apiService = inject(ApiService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
 
   // private isDarkSubscription: Subscription;
   private apiServiceSubscription: Subscription = EMPTY.subscribe();
 
   constructor() {
-    // private apiService: ApiService // private sharedService: SharedService,
-    // this.isDarkSubscription = this.sharedService.isDark$.subscribe(
-    //   (isDark) => (this.isDark = isDark)
-    // );
+    const currentPath = this.location.path().split('/');
+
+    if (currentPath.length === 3) {
+      this.searchForm.setValue({ searchInput: currentPath[2] });
+      this.onSubmit();
+    }
   }
 
   ngOnInit() {
-    // this.sharedService.isDark$.subscribe((isDark) => (this.isDark = isDark));
+    // const currentPath = this.location.path().split('/');
+    // if (currentPath.length === 3) {
+    //   this.searchForm.setValue({ searchInput: currentPath[2] });
+    //   this.onSubmit();
+    // }
   }
 
   ngOnDestroy(): void {
@@ -173,9 +194,11 @@ export class SearchbarComponent implements OnInit, OnDestroy {
             console.log('completed');
           },
           error(err) {
-            console.log('error in apiService of searchbar');
+            console.log('error in apiService of searchbar', err);
           },
         });
+
+      this.router.navigate(['search', this.searchForm.value.searchInput]);
     }
   }
 }

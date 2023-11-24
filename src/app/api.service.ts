@@ -14,13 +14,16 @@ export class ApiService {
   http = inject(HttpClient);
   sharedService = inject(SharedService);
 
-  constructor() {}
+  url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
+  // url = 'http://localhost:3000/definition';
 
   getDefinition(keyword?: string | null): Observable<DictionaryResult[]> {
-    console.log(keyword);
-    return this.http
-      .get<DictionaryResult[]>('http://localhost:3000/definition')
-      .pipe(catchError(this.handleError));
+    return (
+      this.http
+        // .get<DictionaryResult[]>('http://localhost:3000/definition')
+        .get<DictionaryResult[]>(this.url + keyword)
+        .pipe(catchError(this.handleError))
+    );
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -36,6 +39,7 @@ export class ApiService {
 
     return throwError(
       () => new Error('Something bad happened; please try again later.')
+      // () => new Error('Something bad happened; please try again later.')
     );
   }
 }
