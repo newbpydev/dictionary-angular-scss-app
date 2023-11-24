@@ -2,7 +2,14 @@
 import { Subscription } from 'rxjs';
 
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  DoCheck,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 
 import { NotFoundComponent } from '../../components/error/not-found/not-found.component';
 import { FooterComponent } from '../../components/footer/footer.component';
@@ -25,18 +32,21 @@ import { DictionaryError, DictionaryResult } from '../../types/shared';
     <ng-container>
       @if (isDictionaryResult(searchResults)) {
       <app-word-display />
-      <!-- <app-definition-card-list [meanings]="searchResults[0].meanings" /> -->
+      <app-definition-card-list [meanings]="searchResults[0].meanings" />
       <app-footer />
+      } @else if (isDictionaryError(searchResults)) {
+      <app-not-found [error]="searchResults" />
       } @else {
-      <app-not-found />
+      <p>What?</p>
       }
     </ng-container>
   `,
   styles: ``,
 })
-export class DefinitionSectionComponent implements OnInit, OnDestroy {
+export class DefinitionSectionComponent implements OnInit, OnDestroy, DoCheck {
   searchResults: DictionaryError | DictionaryResult[] = [];
   sharedService = inject(SharedService);
+  @Input() keyword: string = '';
 
   private searchResultsSubscription!: Subscription;
 
@@ -53,8 +63,17 @@ export class DefinitionSectionComponent implements OnInit, OnDestroy {
     this.searchResultsSubscription.unsubscribe();
   }
 
+  ngDoCheck(): void {
+    console.log(this.keyword);
+  }
+
   isDictionaryResult(value: unknown): value is DictionaryResult[] {
     const result = value as DictionaryResult[];
-    return !!result && typeof result[0]?.word !== 'string';
+    return Boolean(result.length) && typeof result[0]?.word === 'string';
+  }
+
+  isDictionaryError(value: unknown): value is DictionaryError {
+    const result = value as DictionaryError;
+    return Boolean(result) && typeof result.message === 'string';
   }
 }

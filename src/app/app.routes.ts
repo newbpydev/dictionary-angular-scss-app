@@ -5,12 +5,13 @@ import { DefinitionSectionComponent } from './pages/definition-section/definitio
 
 export const routes: Routes = [
   {
-    path: 'search',
+    path: 'search/:keyword',
     component: DefinitionSectionComponent,
+    title: `Dictionary | :keyword`,
   },
   {
     path: '',
-    redirectTo: '/search',
+    redirectTo: '/search/keyboard',
     pathMatch: 'full',
   },
   {

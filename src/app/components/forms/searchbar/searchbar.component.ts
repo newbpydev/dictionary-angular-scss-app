@@ -132,7 +132,7 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
   }
   `,
 })
-export class SearchbarComponent implements OnInit, OnDestroy, DoCheck {
+export class SearchbarComponent implements OnInit, OnDestroy {
   searchForm = new FormGroup<{ searchInput: FormControl<string | null> }>({
     searchInput: new FormControl('', [Validators.required]),
   });
@@ -141,37 +141,27 @@ export class SearchbarComponent implements OnInit, OnDestroy, DoCheck {
   private sharedService = inject(SharedService);
   private apiService = inject(ApiService);
 
-  private isDarkSubscription: Subscription;
+  // private isDarkSubscription: Subscription;
   private apiServiceSubscription: Subscription = EMPTY.subscribe();
 
   constructor() {
     // private apiService: ApiService // private sharedService: SharedService,
-    this.isDarkSubscription = this.sharedService.isDark$.subscribe(
-      (isDark) => (this.isDark = isDark)
-    );
+    // this.isDarkSubscription = this.sharedService.isDark$.subscribe(
+    //   (isDark) => (this.isDark = isDark)
+    // );
   }
 
   ngOnInit() {
-    this.sharedService.isDark$.subscribe((isDark) => (this.isDark = isDark));
-    console.log(this.searchForm);
-  }
-
-  ngDoCheck(): void {
-    console.log('did it check');
-    console.log(this.sharedService.dictionaryResults$);
-    console.log(this.sharedService.isDark$);
+    // this.sharedService.isDark$.subscribe((isDark) => (this.isDark = isDark));
   }
 
   ngOnDestroy(): void {
-    this.isDarkSubscription.unsubscribe();
+    // this.isDarkSubscription.unsubscribe();
     this.apiServiceSubscription.unsubscribe();
   }
 
   onSubmit() {
     if (this.searchForm.status === 'VALID') {
-      console.log('submitted', this.searchForm.value.searchInput);
-      // let results: DictionaryResult[] = [];
-
       this.apiServiceSubscription = this.apiService
         .getDefinition(this.searchForm.value.searchInput)
         .subscribe({
@@ -187,7 +177,5 @@ export class SearchbarComponent implements OnInit, OnDestroy, DoCheck {
           },
         });
     }
-
-    console.log('isDark', this.isDark);
   }
 }

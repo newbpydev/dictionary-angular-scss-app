@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import {
   Component,
+  DoCheck,
   Inject,
   inject,
   Input,
@@ -29,7 +30,7 @@ import { DefinitionCardComponent } from '../../card/definition-card/definition-c
   styles: ``,
 })
 export class DefinitionCardListComponent implements OnInit, OnDestroy {
-  @Input() meanings: Meaning[] = [];
+  @Input({ required: true }) meanings: Meaning[] = [];
 
   private subscription!: Subscription;
   // meanings: Meaning[] = [];
@@ -39,18 +40,18 @@ export class DefinitionCardListComponent implements OnInit, OnDestroy {
   // constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    this.subscription = this.apiService.getDefinition().subscribe({
-      next: (data) => {
-        console.log(data);
-        this.meanings = data[0].meanings;
-      },
-      complete() {
-        console.log('complete');
-      },
-      error(error) {
-        console.error('There was an error', error);
-      },
-    });
+    // this.subscription = this.apiService.getDefinition().subscribe({
+    //   next: (data) => {
+    //     console.log(data);
+    //     this.meanings = data[0].meanings;
+    //   },
+    //   complete() {
+    //     console.log('complete');
+    //   },
+    //   error(error) {
+    //     console.error('There was an error', error);
+    //   },
+    // });
   }
 
   ngOnDestroy(): void {
