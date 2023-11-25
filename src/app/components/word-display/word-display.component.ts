@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { PlayButtonComponent } from '../ui/play-button/play-button.component';
 
@@ -10,8 +10,8 @@ import { PlayButtonComponent } from '../ui/play-button/play-button.component';
   template: `
     <section class="container word-display__wrapper">
       <div class="word-display__group">
-        <h1>keyboard</h1>
-        <h2>{{ '/ˈkiːbɔːd/' }}</h2>
+        <h1>{{ keyword }}</h1>
+        <h2>{{ phonetic }}</h2>
       </div>
 
       <app-play-button />
@@ -55,4 +55,7 @@ import { PlayButtonComponent } from '../ui/play-button/play-button.component';
     }
   `,
 })
-export class WordDisplayComponent {}
+export class WordDisplayComponent {
+  @Input({ required: true }) keyword = '';
+  @Input({ required: true }) phonetic = '';
+}

@@ -22,7 +22,7 @@ export class ApiService {
       this.http
         // .get<DictionaryResult[]>('http://localhost:3000/definition')
         .get<DictionaryResult[]>(this.url + keyword)
-        .pipe(catchError(this.handleError))
+      // .pipe(catchError(this.handleError))
     );
   }
 

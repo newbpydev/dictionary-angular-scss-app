@@ -31,9 +31,12 @@ import { DictionaryError, DictionaryResult } from '../../types/shared';
   template: `
     <ng-container>
       @if (isDictionaryResult(searchResults)) {
-      <app-word-display />
+      <app-word-display
+        [keyword]="searchResults[0].word"
+        [phonetic]="searchResults[0].phonetic"
+      />
       <app-definition-card-list [meanings]="searchResults[0].meanings" />
-      <app-footer />
+      <app-footer [sourceLink]="searchResults[0].sourceUrls[0]" />
       } @else if (isDictionaryError(searchResults)) {
       <app-not-found [error]="searchResults" />
       } @else {

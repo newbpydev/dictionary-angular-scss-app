@@ -148,15 +148,12 @@ export class SearchbarComponent implements OnInit, OnDestroy {
   });
   @Input() isDark = false;
 
-  // keyword$ = Observable<DictionaryResult[]>;
-
   private sharedService = inject(SharedService);
   private apiService = inject(ApiService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private location = inject(Location);
 
-  // private isDarkSubscription: Subscription;
   private apiServiceSubscription: Subscription = EMPTY.subscribe();
 
   constructor() {
@@ -190,11 +187,11 @@ export class SearchbarComponent implements OnInit, OnDestroy {
             const results: DictionaryResult[] = value;
             this.sharedService.setDictionaryResults(results);
           },
-          complete() {
-            console.log('completed');
-          },
-          error(err) {
-            console.log('error in apiService of searchbar', err);
+          // complete() {
+          //   console.log('completed');
+          // },
+          error: (err) => {
+            this.sharedService.setDictionaryResults(err.error);
           },
         });
 

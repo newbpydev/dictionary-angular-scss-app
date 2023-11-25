@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { SvgIconComponent } from '../ui/icons/svg-icon/svg-icon.component';
 
@@ -15,7 +15,7 @@ import { SvgIconComponent } from '../ui/icons/svg-icon/svg-icon.component';
         href="https://en.wikipedia.org/wiki/Keyboard"
         class="footer-source__link"
       >
-        <span> https://en.wikipedia.org/wiki/Keyboard </span>
+        <span> {{ sourceLink }} </span>
 
         <app-svg-icon icon="link" height="12" width="12" />
       </a>
@@ -52,4 +52,6 @@ import { SvgIconComponent } from '../ui/icons/svg-icon/svg-icon.component';
     }
   `,
 })
-export class FooterComponent {}
+export class FooterComponent {
+  @Input({ required: true }) sourceLink = '';
+}
