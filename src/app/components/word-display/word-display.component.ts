@@ -58,4 +58,5 @@ import { PlayButtonComponent } from '../ui/play-button/play-button.component';
 export class WordDisplayComponent {
   @Input({ required: true }) keyword = '';
   @Input({ required: true }) phonetic = '';
+  // @Input({ required: true }) audioUrl = '';
 }
