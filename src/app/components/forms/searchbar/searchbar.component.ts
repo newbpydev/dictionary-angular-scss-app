@@ -3,6 +3,8 @@ import { switchMap } from 'rxjs/operators';
 
 import { CommonModule, Location } from '@angular/common';
 import {
+  AfterViewChecked,
+  AfterViewInit,
   Component,
   DoCheck,
   inject,
@@ -17,6 +19,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -142,8 +145,10 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
 /* -------------------------------------------------------------------------- */
 /*                             Searchbar Component                            */
 /* -------------------------------------------------------------------------- */
-export class SearchbarComponent implements OnInit, OnDestroy {
-  searchForm = new FormGroup<{ searchInput: FormControl<string | null> }>({
+export class SearchbarComponent implements OnInit, OnDestroy, AfterViewInit {
+  searchForm = new FormGroup<{
+    searchInput: FormControl<string | null>;
+  }>({
     searchInput: new FormControl('', [Validators.required]),
   });
   @Input() isDark = false;
@@ -154,21 +159,32 @@ export class SearchbarComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private location = inject(Location);
 
+  private sanitizer = inject(DomSanitizer);
+
   private apiServiceSubscription: Subscription = EMPTY.subscribe();
 
   constructor() {
     const currentPath = this.location.path().split('/');
+    if (currentPath.length === 3) {
+      const searchInput = decodeURI(currentPath[2]);
+      this.searchForm.setValue({ searchInput });
+      this.onSubmit();
+    }
+  }
 
+  ngOnInit() {
+    const currentPath = this.location.path().split('/');
     if (currentPath.length === 3) {
       this.searchForm.setValue({ searchInput: currentPath[2] });
       this.onSubmit();
     }
   }
 
-  ngOnInit() {
+  ngAfterViewInit(): void {
     // const currentPath = this.location.path().split('/');
     // if (currentPath.length === 3) {
-    //   this.searchForm.setValue({ searchInput: currentPath[2] });
+    //   const searchInput = decodeURI(currentPath[2]);
+    //   this.searchForm.setValue({ searchInput });
     //   this.onSubmit();
     // }
   }

@@ -6,8 +6,9 @@ import { DefinitionSectionComponent } from './pages/definition-section/definitio
 export const routes: Routes = [
   {
     path: 'search/:keyword',
-    component: DefinitionSectionComponent,
+    // component: DefinitionSectionComponent,
     title: `Dictionary | :keyword`,
+    loadComponent: () => DefinitionSectionComponent,
   },
   {
     path: '',

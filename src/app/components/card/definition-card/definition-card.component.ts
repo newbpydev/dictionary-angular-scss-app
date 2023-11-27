@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { CommonModule, Location } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 
 import { Meaning } from '../../../types/shared';
 
@@ -38,7 +38,8 @@ import { Meaning } from '../../../types/shared';
         <h4 class="definition-card__other-word-title">Antonyms</h4>
         <p class="definition-card__other-word">
           @for (word of meaning.antonyms; track $index) {
-          <a [routerLink]="['/search', word]">{{ word }}</a> {{ ' ' }}
+          <a (click)="navigateToSearch(word)">{{ word }}</a> {{ ' ' }}
+          <!-- <a [routerLink]="['/search', word]">{{ word }}</a> {{ ' ' }} -->
           }
         </p>
       </div>
@@ -47,7 +48,8 @@ import { Meaning } from '../../../types/shared';
         <h4 class="definition-card__other-word-title">Synonyms</h4>
         <p class="definition-card__other-word">
           @for (word of meaning.synonyms; track $index) {
-          <a [routerLink]="['/search', word]">{{ word }}</a> {{ ' ' }}
+          <a (click)="navigateToSearch(word)">{{ word }}</a> {{ ' ' }}
+          <!-- <a [routerLink]="['/search', word]">{{ word }}</a> {{ ' ' }} -->
           }
         </p>
       </div>
@@ -181,4 +183,24 @@ export class DefinitionCardComponent {
     synonyms: ['electronic keyboard'],
     antonyms: [],
   };
+
+  private router = inject(Router);
+  private location = inject(Location);
+
+  navigateToSearch(word: string) {
+    const routeUrl = `/search/${word}`;
+
+    //navigate to the new URL
+    this.router
+      .navigateByUrl(routeUrl, { skipLocationChange: true })
+      .then(() => {
+        // force a page refresh by navigating back to the current route
+        this.router.navigate([routeUrl], { queryParamsHandling: 'merge' });
+      });
+    // //navigate to the new URL
+    // this.router.navigateByUrl(routeUrl).then(() => {
+    //   // force a page refresh by navigating back to the current route
+    //   this.location.replaceState(routeUrl);
+    // });
+  }
 }

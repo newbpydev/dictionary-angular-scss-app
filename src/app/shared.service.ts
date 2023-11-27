@@ -9,40 +9,35 @@ import { DictionaryError, DictionaryResult, FontType } from './types/shared';
   providedIn: 'root',
 })
 export class SharedService implements OnDestroy {
+  /* --------------------------------- isDark --------------------------------- */
   private isDarkSubject = new BehaviorSubject<boolean>(false);
   isDark$ = this.isDarkSubject.asObservable();
-
-  private selectedFontSubject = new BehaviorSubject<FontType>('sans serif');
-  selectedFont$ = this.selectedFontSubject.asObservable();
-
-  private dictionaryResultsSubject = new BehaviorSubject<
-    DictionaryResult[] | DictionaryError
-  >([]);
-  dictionaryResults$ = this.dictionaryResultsSubject.asObservable();
-
-  private audioUrlSubject = new BehaviorSubject<string>('');
-  audioUrl$ = this.audioUrlSubject.asObservable();
-
-  private ngUnsubscribe = new Subject<void>();
-
-  // constructor(private storageService: StorageService) {}
 
   setIsDark(value: boolean) {
     this.isDarkSubject.next(value);
   }
 
+  /* ------------------------------ selectedFont ------------------------------ */
+  private selectedFontSubject = new BehaviorSubject<FontType>('sans serif');
+  selectedFont$ = this.selectedFontSubject.asObservable();
+
   setSelectedFont(value: FontType) {
     this.selectedFontSubject.next(value);
   }
+
+  /* ---------------------------- dictionaryResults --------------------------- */
+  private dictionaryResultsSubject = new BehaviorSubject<
+    DictionaryResult[] | DictionaryError
+  >([]);
+  dictionaryResults$ = this.dictionaryResultsSubject.asObservable();
 
   setDictionaryResults(value: DictionaryResult[] | DictionaryError) {
     this.dictionaryResultsSubject.next(value);
   }
 
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
-  }
+  /* -------------------------------- audioUrl -------------------------------- */
+  private audioUrlSubject = new BehaviorSubject<string>('');
+  audioUrl$ = this.audioUrlSubject.asObservable();
 
   getAudioUrlObservable() {
     this.dictionaryResults$.subscribe((res) => {
@@ -53,5 +48,15 @@ export class SharedService implements OnDestroy {
         this.audioUrlSubject.next(url ? url : 'wrong');
       }
     });
+  }
+
+  /* ------------------------------ ngUnsubscribe ----------------------------- */
+  private ngUnsubscribe = new Subject<void>();
+
+  // constructor(private storageService: StorageService) {}
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

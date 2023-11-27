@@ -79,7 +79,8 @@ export class PlayButtonComponent
           const audioUrl = result[0].phonetics.find(
             (phon) => phon.sourceUrl?.length
           );
-          this.updateAudioUrl(audioUrl?.audio);
+          // this.updateAudioUrl(audioUrl?.audio);
+          this.audioUrl = audioUrl?.audio;
         }
       }
     );
