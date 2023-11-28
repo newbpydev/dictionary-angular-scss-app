@@ -168,13 +168,14 @@ export class SearchbarComponent implements OnInit, OnDestroy, AfterViewInit {
     if (currentPath.length === 3) {
       const searchInput = decodeURI(currentPath[2]);
       this.searchForm.setValue({ searchInput });
-      // this.onSubmit();
+      this.onSubmit();
     }
   }
 
   ngOnInit() {
     const currentPathDirty = this.location.path().split('/');
     const currentPath = decodeURI(currentPathDirty[2]);
+
     // console.log(currentPath[2]);
     // if (currentPath.length === 3) {
     //   this.searchForm.setValue({ searchInput: currentPath[2] });
@@ -187,7 +188,6 @@ export class SearchbarComponent implements OnInit, OnDestroy, AfterViewInit {
       // const newPath = this.location.path().split('/')[2];
 
       if (e instanceof NavigationEnd && newPath !== currentPath) {
-        console.log(newPath, decodeURI(currentPath));
         // console.log(newPath !== currentPath[2]);
         this.searchForm.setValue({ searchInput: newPath });
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
