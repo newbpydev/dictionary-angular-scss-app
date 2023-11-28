@@ -1,5 +1,7 @@
 # Frontend Mentor - Dictionary web app solution
 
+![desktop light mode](./src/assets/images/../screenshots/desktop_20231128_0001.png)
+
 This is a solution to the [Dictionary web app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/dictionary-web-app-h5wwnyuKFL). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
 ## Table of contents
@@ -36,15 +38,16 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
-
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
-
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it.
-
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
+![desktop light mode](./src/assets/images/../screenshots/desktop_20231128_0001.png)
+![desktop dark mode](./src/assets/images/../screenshots/desktop_20231128_0002.png)
+![tablet light mode](./src/assets/images/../screenshots/tablet_20231128_0001.png)
+![tablet dark mode](./src/assets/images/../screenshots/tablet_20231128_0002.png)
+![mobile light mode](./src/assets/images/../screenshots/mobile_20231128_0008.png)
+![mobile dark mode](./src/assets/images/../screenshots/mobile_20231128_0007.png)
+![mobile button highlight](./src/assets/images/../screenshots/mobile_20231128_0004.png)
+![mobile error](./src/assets/images/../screenshots/mobile_20231128_0003.png)
+![mobile not found](./src/assets/images/../screenshots/mobile_20231128_0002.png)
+![mobile page not found](./src/assets/images/../screenshots/mobile_20231128_0001.png)
 
 ### Links
 
@@ -55,66 +58,127 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 
 ### Built with
 
+- Angular 17
+- Rxjs
 - Semantic HTML5 markup
-- CSS custom properties
+- SCSS custom properties
 - Flexbox
-- CSS Grid
 - Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
-
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+- [Angular](https://angular.io/) - Angular Framework
+- [RxJS](https://rxjs.dev/) - Reactive Extensions Library for JavaScript
+- [SCSS](https://sass-lang.com/) - CSS with superpowers
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+I approached this project by first understanding the requirements and breaking down the
+tasks. Challenges included dealing with the Angular framework, implementing the HttpClient
+for API calls, and managing components within and outside the router-outlet. Overcoming
+these challenges was a valuable learning experience.
+
+This project served as my introduction to Angular, where I learned about inline templates, styles, and keeping components in a single file. I gained insights into working with RxJS for shared data between components and handling routing complexities.
 
 To see how you can add code snippets, see below:
 
 ```html
-<h1>Some HTML code I'm proud of</h1>
+<div class="font-selection-wrapper">
+  <button class="font-btn" (click)="toggleSelectMenu()" appClickOutside (clickOutside)="isSelecting && handleOutsideClick()">
+    <span>{{ selectedFont | titlecase }}</span>
+    <app-svg-icon icon="arrow-down" width="12" height="6" />
+  </button>
+
+  @if (isSelecting) {
+  <ul class="font-options" [ngClass]="isDark ? 'dark' : ''">
+    <li class="font-options__sans-serif" (click)="handleFontChange('sans serif')">Sans Serif</li>
+    <li class="font-options__serif" (click)="handleFontChange('serif')">Serif</li>
+    <li class="font-options__mono" (click)="handleFontChange('mono')">Mono</li>
+  </ul>
+  }
+</div>
 ```
 
 ```css
-.proud-of-this-css {
-  color: papayawhip;
+.play {
+  cursor: pointer;
+
+  & circle {
+    transition: all 0.3s ease-in-out;
+
+    & + path {
+      transition: all 0.3s ease-in-out;
+    }
+
+    &:hover {
+      opacity: 1;
+
+      & + path {
+        fill: #fff;
+      }
+    }
+  }
 }
 ```
 
 ```js
-const proudOfThisFunc = () => {
-  console.log("🎉");
+@Injectable({
+  providedIn: 'root',
+})
+export class StorageService {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
+  isLocalStorageAvailable(): boolean {
+    return isPlatformBrowser(this.platformId) && !!window.localStorage;
+  }
+
+  setItem(key: string, value: any): void {
+    if (this.isLocalStorageAvailable()) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+  }
+
+  getItem(key: string): any {
+    if (this.isLocalStorageAvailable()) {
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : null;
+    }
+  }
+
+  removeItem(key: string): void {
+    if (this.isLocalStorageAvailable()) {
+      localStorage.removeItem(key);
+    }
+  }
+
+  clear(): void {
+    if (this.isLocalStorageAvailable()) {
+      localStorage.clear();
+    }
+  }
+}
 };
 ```
 
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
-
-**Note: Delete this note and the content within this section and replace with your own learnings.**
-
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
-
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
+In future updates, I plan to continue exploring more the vast world of Angular. From
+Signals, defer directives and so much. In this project I decided to not use those tools
+yet so I could experience what problems do these tools solve. I am very excited for whats
+to come.
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
+- [Angular](https://angular.io/) - This helped me understand the ins and outs of Angular.
+  It is the best source of information for Angular.
+- [Angular Dev](https://angular.dev/) - This is the amazing new home of Angular Docs. The
+  new format helped me get a quick grasp on many Angular topics such as Router, Forms, and
+  Directives to name a few.
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
+- Website - [Juan Gomez](https://github.com/newbpydev)
+- Frontend Mentor - [@newbpydev](https://www.frontendmentor.io/profile/newbpydev)
+- Twitter - [@Newb_PyDev](https://twitter.com/Newb_PyDev)
 
 ## Acknowledgments
 
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
+The code may not be perfect compared to my sensei @jonasschmedtman but I need to thank him because he has shown me the ropes and now I am a confident web
+designer.

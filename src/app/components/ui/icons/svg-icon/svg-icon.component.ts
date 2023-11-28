@@ -124,14 +124,6 @@ import { Component } from '@angular/core';
           }
         }
       }
-
-      /* &:hover {
-        transition: all 3s ease-in-out;
-
-        & path {
-          fill: white;
-        }
-      } */
     }
   `,
 })
