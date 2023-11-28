@@ -39,8 +39,6 @@ import { DictionaryError, DictionaryResult } from '../../types/shared';
       <app-footer [sourceLink]="searchResults[0].sourceUrls[0]" />
       } @else if (isDictionaryError(searchResults)) {
       <app-not-found [error]="searchResults" />
-      } @else {
-      <p>What?</p>
       }
     </ng-container>
   `,
