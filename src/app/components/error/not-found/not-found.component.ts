@@ -10,9 +10,15 @@ import { DictionaryError } from '../../../types/shared';
   template: `
     <section class="container not-found">
       <div class="not-found__icon">☹️</div>
-      <h1 class="not-found__title">{{ error.title }}</h1>
+      <h1 class="not-found__title">
+        {{ error ? error.title : '404 Page Not Found' }}
+      </h1>
       <p class="not-found__message">
-        {{ error.message + ' ' + error.resolution }}
+        {{
+          error
+            ? error.message + ' ' + error.resolution
+            : 'The page you’re looking for can’t be found'
+        }}
       </p>
     </section>
   `,
@@ -65,7 +71,7 @@ import { DictionaryError } from '../../../types/shared';
   `,
 })
 export class NotFoundComponent {
-  @Input({ required: true }) error: DictionaryError = {
+  @Input() error: DictionaryError = {
     message: '',
     resolution: '',
     title: '',
