@@ -63,7 +63,7 @@ export class DefinitionSectionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.searchResultsSubscription.unsubscribe();
+    this.searchResultsSubscription?.unsubscribe();
   }
 
   isDictionaryResult(value: unknown): value is DictionaryResult[] {

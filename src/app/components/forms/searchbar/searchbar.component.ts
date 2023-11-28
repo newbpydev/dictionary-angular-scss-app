@@ -168,16 +168,35 @@ export class SearchbarComponent implements OnInit, OnDestroy, AfterViewInit {
     if (currentPath.length === 3) {
       const searchInput = decodeURI(currentPath[2]);
       this.searchForm.setValue({ searchInput });
-      this.onSubmit();
+      // this.onSubmit();
     }
   }
 
   ngOnInit() {
-    const currentPath = this.location.path().split('/');
-    if (currentPath.length === 3) {
-      this.searchForm.setValue({ searchInput: currentPath[2] });
-      this.onSubmit();
-    }
+    const currentPathDirty = this.location.path().split('/');
+    const currentPath = decodeURI(currentPathDirty[2]);
+    // console.log(currentPath[2]);
+    // if (currentPath.length === 3) {
+    //   this.searchForm.setValue({ searchInput: currentPath[2] });
+    //   this.onSubmit();
+    // }
+
+    /* ------------------------------- router test ------------------------------ */
+    this.router.events.subscribe((e) => {
+      const newPath = decodeURI(this.location.path().split('/')[2]);
+      // const newPath = this.location.path().split('/')[2];
+
+      if (e instanceof NavigationEnd && newPath !== currentPath) {
+        console.log(newPath, decodeURI(currentPath));
+        // console.log(newPath !== currentPath[2]);
+        this.searchForm.setValue({ searchInput: newPath });
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.onSubmit();
+        // this.router.onSameUrlNavigation = 'reload';
+      }
+    });
+
+    // console.log(currentPath[2]);
   }
 
   ngAfterViewInit(): void {
@@ -192,6 +211,7 @@ export class SearchbarComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     // this.isDarkSubscription.unsubscribe();
     this.apiServiceSubscription.unsubscribe();
+    // this.router
   }
 
   onSubmit() {
