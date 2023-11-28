@@ -17,6 +17,7 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
         (click)="toggleSelectMenu()"
         appClickOutside
         (clickOutside)="isSelecting && handleOutsideClick()"
+        aria-label="Selected Font"
       >
         <span>{{ selectedFont | titlecase }}</span>
         <app-svg-icon icon="arrow-down" width="12" height="6" />

@@ -18,6 +18,7 @@ import { SvgIconComponent } from '../icons/svg-icon/svg-icon.component';
           type="checkbox"
           (change)="onCheckChange($event)"
           [checked]="isChecked"
+          aria-label="Theme Switch"
         />
         <span class="slider round"></span>
       </label>
