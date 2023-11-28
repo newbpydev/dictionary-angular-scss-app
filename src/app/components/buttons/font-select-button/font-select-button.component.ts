@@ -113,7 +113,7 @@ import { SvgIconComponent } from '../../ui/icons/svg-icon/svg-icon.component';
 export class FontSelectButtonComponent {
   isSelecting: boolean = false;
   isDark: boolean = false;
-  selectedFont: FontType = 'sans serif';
+  selectedFont: FontType = 'serif';
 
   constructor(
     private sharedService: SharedService,
